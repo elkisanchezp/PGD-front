@@ -1,0 +1,71 @@
+﻿@model List<TesisMarco.DTO.Formulario>
+
+
+@{
+    Layout = "_Layout";
+}
+
+
+
+<h1>Listado de Formularios</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Vigencia</th>
+            <th>Preguntas</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var formulario in Model)
+        {
+            <tr data-toggle="collapse" data-target="#detalle-@formulario.Id" class="accordion-toggle">
+                <td>@formulario.Id</td>
+                <td>@formulario.Vigencia</td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#detalle-@formulario.Id">Mostrar detalle</button>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" class="hiddenRow">
+                    <div class="accordian-body collapse" id="detalle-@formulario.Id">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Enunciado</th>
+                                    <th>Elemento</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var pregunta in formulario.Preguntas)
+                                {
+                                    <tr>
+                                        <td>@pregunta.Id</td>
+                                        <td>@pregunta.Enunciado</td>
+                                        <td>@pregunta.Elemento</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+    <script>
+        $(document).ready(function () {
+            $('.collapse').on('shown.bs.collapse', function () {
+                $(this).parent().find('.accordion-toggle').addClass('active');
+            });
+
+            $('.collapse').on('hidden.bs.collapse', function () {
+                $(this).parent().find('.accordion-toggle').removeClass('active');
+            });
+        });
+    </script>
+

@@ -1,0 +1,15 @@
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\TesisMarco.exe
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\appsettings.Development.json
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\appsettings.json
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\trunk\startbootstrap-sb-admin-2-gh-pages\package-lock.json
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\trunk\startbootstrap-sb-admin-2-gh-pages\package.json
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\TesisMarco.dll
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\TesisMarco.deps.json
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\TesisMarco.runtimeconfig.json
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\TesisMarco.pdb
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\Newtonsoft.Json.dll
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\RestSharp.dll
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\System.Security.Permissions.dll
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\System.Text.Encodings.Web.dll
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\System.Text.Json.dll
+C:\Users\Elkin Sánchez\source\repos\TesisMarco\TesisMarco\obj\Release\net6.0\PubTmp\Out\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll

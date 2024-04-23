@@ -1,0 +1,258 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\controllers\\preguntascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\controllers\\preguntascontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\views\\preguntas\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\views\\preguntas\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\dto\\formulario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\dto\\formulario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\dto\\pregunta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\dto\\pregunta.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\views\\login\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\controllers\\homecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|c:\\users\\elkin s\u00E1nchez\\source\\repos\\tesismarco\\tesismarco\\models\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BBCD34E5-5EF1-48F8-9CF3-8082A263C99F}|TesisMarco\\TesisMarco.csproj|solutionrelative:tesismarco\\models\\loginmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "TesisMarco\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "TesisMarco\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AQIAAHgAAAAAAAAAAAAgwIoAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-22T23:53:36.322Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PreguntasController.cs",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Controllers\\PreguntasController.cs",
+              "RelativeDocumentMoniker": "TesisMarco\\Controllers\\PreguntasController.cs",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Controllers\\PreguntasController.cs",
+              "RelativeToolTip": "TesisMarco\\Controllers\\PreguntasController.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAswA4AAAAMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-23T02:38:38.739Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Formulario.cs",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\DTO\\Formulario.cs",
+              "RelativeDocumentMoniker": "TesisMarco\\DTO\\Formulario.cs",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\DTO\\Formulario.cs",
+              "RelativeToolTip": "TesisMarco\\DTO\\Formulario.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-23T03:16:24.88Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Views\\Preguntas\\Index.cshtml",
+              "RelativeDocumentMoniker": "TesisMarco\\Views\\Preguntas\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Views\\Preguntas\\Index.cshtml",
+              "RelativeToolTip": "TesisMarco\\Views\\Preguntas\\Index.cshtml",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAAAEUAAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-23T02:39:00.353Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LoginController.cs",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Controllers\\LoginController.cs",
+              "RelativeDocumentMoniker": "TesisMarco\\Controllers\\LoginController.cs",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Controllers\\LoginController.cs",
+              "RelativeToolTip": "TesisMarco\\Controllers\\LoginController.cs",
+              "ViewState": "AQIAADYAAAAAAAAAAAAcwEMAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-23T00:02:02.851Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\appsettings.json",
+              "RelativeDocumentMoniker": "TesisMarco\\appsettings.json",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\appsettings.json",
+              "RelativeToolTip": "TesisMarco\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-04-23T00:02:19.309Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Pregunta.cs",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\DTO\\Pregunta.cs",
+              "RelativeDocumentMoniker": "TesisMarco\\DTO\\Pregunta.cs",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\DTO\\Pregunta.cs",
+              "RelativeToolTip": "TesisMarco\\DTO\\Pregunta.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-23T03:16:54.196Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "TesisMarco\\Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "TesisMarco\\Views\\Home\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-23T01:12:27.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Views\\Login\\Index.cshtml",
+              "RelativeDocumentMoniker": "TesisMarco\\Views\\Login\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Views\\Login\\Index.cshtml",
+              "RelativeToolTip": "TesisMarco\\Views\\Login\\Index.cshtml",
+              "ViewState": "AQIAAEgAAAAAAAAAAAAAAFoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-23T00:02:13.322Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Views\\DashBoard\\Index.cshtml",
+              "RelativeDocumentMoniker": "TesisMarco\\Views\\DashBoard\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Views\\DashBoard\\Index.cshtml",
+              "RelativeToolTip": "TesisMarco\\Views\\DashBoard\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAYAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-04-23T02:27:05.757Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Program.cs",
+              "RelativeDocumentMoniker": "TesisMarco\\Program.cs",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Program.cs",
+              "RelativeToolTip": "TesisMarco\\Program.cs",
+              "ViewState": "AQIAAAQAAAAAAAAAAAAgwBIAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-23T00:02:21.48Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "DashBoardController.cs",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Controllers\\DashBoardController.cs",
+              "RelativeDocumentMoniker": "TesisMarco\\Controllers\\DashBoardController.cs",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Controllers\\DashBoardController.cs",
+              "RelativeToolTip": "TesisMarco\\Controllers\\DashBoardController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-23T02:26:30.55Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "HomeController.cs",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Controllers\\HomeController.cs",
+              "RelativeDocumentMoniker": "TesisMarco\\Controllers\\HomeController.cs",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Controllers\\HomeController.cs",
+              "RelativeToolTip": "TesisMarco\\Controllers\\HomeController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-23T01:29:47.392Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "LoginModel.cs",
+              "DocumentMoniker": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Models\\LoginModel.cs",
+              "RelativeDocumentMoniker": "TesisMarco\\Models\\LoginModel.cs",
+              "ToolTip": "C:\\Users\\Elkin S\u00E1nchez\\source\\repos\\TesisMarco\\TesisMarco\\Models\\LoginModel.cs",
+              "RelativeToolTip": "TesisMarco\\Models\\LoginModel.cs",
+              "ViewState": "AQIAAAEAAAAAAAAAAAAYwAwAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-04-23T00:48:11.091Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
