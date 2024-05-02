@@ -1,0 +1,28 @@
+﻿@model TesisMarco.Models.UsuarioModel
+
+@{
+    Layout = "_Layout";
+}
+@using (Html.BeginForm("CrearUsuario", "Usuarios", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Usuario)
+        @Html.TextBoxFor(m => m.Usuario, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Usuario, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password)
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.IdTipoUsuario)
+        @Html.DropDownListFor(m => m.IdTipoUsuario, new SelectList(new[] { new { Value = "1", Text = "Administrador" }, new { Value = "2", Text = "Usuario" } }, "Value", "Text"), "Seleccione...", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.IdTipoUsuario, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-primary">Crear</button>
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+}
