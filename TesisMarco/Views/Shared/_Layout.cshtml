@@ -100,6 +100,20 @@
                 </div> *@
             </li>
 
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsuario"
+                   aria-expanded="true" aria-controls="collapseUsuario">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Usuarios</span>
+                </a>
+                <div id="collapseUsuario" class="collapse" aria-labelledby="headingUsuario" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">administración:</h6>
+                        <a class="collapse-item" href="@Url.Action("Index","Usuarios")">Usuarios</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
