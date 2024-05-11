@@ -1,0 +1,165 @@
+﻿<!-- Modal para crear nuevo formulario -->
+<div class="modal fade" id="crearFormularioModal" tabindex="-1" role="dialog" aria-labelledby="crearFormularioModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <!-- Hacemos el modal más grande con la clase modal-lg -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearFormularioModalLabel">Crear Nuevo Formulario furag</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="crearFormularioForm">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Entidad</label>
+                                <input type="text" name="entidad" id="" readonly value="@ViewBag.EntidadUsuario" class="form-control" />
+                                <input type="hidden" value="@ViewBag.IdEntidad" id="IdEntidad" name="IdEntidad" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="vigencia">Vigencia:</label>
+                                <input type="date" id="vigencia" name="vigencia" class="form-control" required min="@DateTime.Now.ToString("yyyy-MM-dd")">
+                            </div>
+
+                        </div>
+                        <br />
+                        <div class="divider"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Preguntas:</h4>
+                                <ul id="listaPreguntas"></ul>
+                                <button type="button" class="btn btn-primary" id="btnAgregarPregunta">Agregar Pregunta</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="enviarFormulario()">Crear</button> <!-- Agregamos un botón para enviar el formulario -->
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+<script>
+
+
+    $(document).ready(function () {
+        var contadorPreguntas = 1;
+
+        // Función para agregar una nueva pregunta
+        function agregarPregunta() {
+            var nuevaPregunta = "<li>" +
+                "<strong>ID:</strong> " + contadorPreguntas + "<br />" +
+                "<strong>Enunciado:</strong> <textarea id='enunciado" + contadorPreguntas + "' class='form-control'></textarea> <br />" +
+                "<strong>Elemento:</strong> <input type='text' id='elemento" + contadorPreguntas + "' class='form-control' value='Transformacion Digital' readonly />" +
+                "</li>";
+
+            $("#listaPreguntas").append(nuevaPregunta);
+            contadorPreguntas++;
+        }
+
+        // Manejador de evento para el botón Agregar Pregunta
+        $("#btnAgregarPregunta").click(function () {
+            agregarPregunta();
+        });
+
+        $(".datepicker").datepicker({
+            dateFormat: "yy-mm-dd", // Formato de fecha deseado
+            minDate: 0 // Fecha mínima, en este caso, la fecha actual
+        });
+        debugger;
+
+    });
+
+
+
+    function enviarFormulario() {
+
+        // Recopilar la información del formulario
+        var vigencia = $('#vigencia').val();
+        var preguntas = [];
+
+        $('#listaPreguntas li').each(function () {
+            var id = $(this).find('strong:contains("ID:")').next().text().trim();
+            var enunciado = $(this).find('strong:contains("Enunciado:")').next().val();
+            var elemento = $(this).find('strong:contains("Elemento:")').next().val();
+
+
+            // Verificar si los campos enunciado y elemento están vacíos
+            if (enunciado.trim() === '' || elemento.trim() === '') {
+                alert('Por favor, complete todos los campos de la pregunta.');
+                return; // Salir de la función si algún campo está vacío
+            }
+
+            var pregunta = {
+                Id: id,
+                Enunciado: enunciado,
+                Elemento: elemento
+            };
+
+            preguntas.push(pregunta);
+        });
+
+        if (preguntas.length == 0) {
+            alert('Por favor, adicione al menos una pregunta.');
+            return;
+        }
+
+        // Crear el objeto JavaScript con la estructura deseada
+        var entidad = {
+            CodigoEntidad: $("#IdEntidad").val(), // Aquí debes asignar el valor correcto si tienes uno disponible
+            Vigencia: vigencia,
+            Preguntas: preguntas
+        };
+
+
+        // Verificar si el campo de vigencia está vacío
+        if (vigencia.trim() === '') {
+            alert('Por favor, seleccione una fecha de vigencia.');
+            return; // Salir de la función si el campo de vigencia está vacío
+        }
+
+
+
+        $.ajax({
+            url: '@Url.Action("GuardarFormulario", "Preguntas")',
+            type: 'POST',
+            dataType: 'json',
+            data: entidad,
+
+            success: function (result) {
+                debugger;
+                // Manejar la respuesta exitosa aquí
+
+                if (result.ok) {
+                    alert('Se ha guardado de forma satisfactoria.');
+
+                    window.location.href = '/Preguntas/Index';
+
+
+                } else {
+                    alert(result.mensaje);
+                }
+
+
+                console.log(result);
+            },
+            error: function (xhr, status, error) {
+                // Manejar errores aquí
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
+
+</script>

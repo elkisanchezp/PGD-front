@@ -1,0 +1,32 @@
+﻿@model List<TesisMarco.DTO.PreguntaGE>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Enunciado</th>
+            <th>Evidencia Sugerida</th>
+            <th>Rol Sugerido</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pregunta in Model)
+        {
+            <tr>
+                <td>@pregunta.Id</td>
+                <td>@pregunta.Enunciado</td>
+                <td>@pregunta.EvidenciaSugerida</td>
+                <td>@pregunta.RolSugerido</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="eliminarPreguntaGE('@pregunta.Id')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+</script>

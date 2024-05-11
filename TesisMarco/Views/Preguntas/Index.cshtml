@@ -4,17 +4,31 @@
 @{
     Layout = "_Layout";
 }
+<style>
+    .table .collapsing {
+        background-color: #f5f5f5; /* Color de fondo cuando se está expandiendo */
+    }
+</style>
 
 
 
-<h1>Listado de Formularios</h1>
 
+<h3>Listado de Formularios</h3>
+
+<div class="text-right">
+    <!-- Agregado para alinear el botón hacia la derecha -->
+    <button type="button" class="btn btn-success" id="btnCrearFormulario">
+        <i class="fas fa-plus"></i> <!-- Icono de adición de Font Awesome -->
+    </button>
+</div>
+<br />
 <table class="table">
     <thead>
         <tr>
             <th>ID</th>
             <th>Vigencia</th>
             <th>Preguntas</th>
+            <th>Acciones</th>
         </tr>
     </thead>
     <tbody>
@@ -24,7 +38,16 @@
                 <td>@formulario.Id</td>
                 <td>@formulario.Vigencia</td>
                 <td>
-                    <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#detalle-@formulario.Id">Mostrar detalle</button>
+                    <button type="button" class="btn btn-link text-primary btn-toggle" data-toggle="collapse" data-target="#detalle-@formulario.Id" style="cursor: pointer;">
+                        <i class="fas fa-plus-circle mr-1"></i> <span class="btn-toggle-text">Detalle</span>
+                    </button>
+                </td>
+
+
+                <td>
+                    <button type="button" class="btn btn-danger btnEliminarFormulario" data-id="@formulario.Id" onclick="event.stopPropagation()">
+                        <i class="fas fa-trash"></i> <!-- Icono de eliminar de Font Awesome -->
+                    </button>
                 </td>
             </tr>
             <tr>
@@ -36,6 +59,7 @@
                                     <th>ID</th>
                                     <th>Enunciado</th>
                                     <th>Elemento</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -45,6 +69,13 @@
                                         <td>@pregunta.Id</td>
                                         <td>@pregunta.Enunciado</td>
                                         <td>@pregunta.Elemento</td>
+                                        <td>
+                                        <td>
+                                            <a href="#" class="btn btn-primary btn-sm" onclick="mostrarGestionExtendida('@pregunta.Id', '@pregunta.Enunciado', '@pregunta.Elemento')">
+                                                <i class="fas fa-cogs"></i> <!-- Ícono de ajustes de Font Awesome -->
+                                                <span class="ml-2">Gestión Extendida</span>
+                                            </a>
+                                        </td>
                                     </tr>
                                 }
                             </tbody>
@@ -56,16 +87,279 @@
     </tbody>
 </table>
 
+<div id="contenedorFormulario"></div>
 
-    <script>
-        $(document).ready(function () {
-            $('.collapse').on('shown.bs.collapse', function () {
-                $(this).parent().find('.accordion-toggle').addClass('active');
+<!-- Modal existente -->
+<div id="gestionExtendidaModal" class="modal fade" tabindex="-1" role="dialog">
+    <!-- Contenido del modal existente -->
+    <div class="modal-dialog modal-xl" role="document">
+        <!-- Cambiado a modal-xl -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Gestión Extendida - ID: <span id="modalFormularioId"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Enunciado:</strong> <span id="modalEnunciado"></span></p>
+                <p><strong>Elemento:</strong> <span id="modalElemento"></span></p>
+
+                <!-- Botón para agregar nuevo registro -->
+                <div class="mb-3">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarRegistroModal">
+                        <i class="fas fa-plus"></i> Agregar
+                    </button>
+                </div>
+
+                <!-- Aquí puedes agregar la grilla para relacionar otras preguntas -->
+                <div id="contenedorGe"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Nuevo modal para agregar registro -->
+<div id="agregarRegistroModal" class="modal fade" tabindex="-1" role="dialog">
+    <!-- Contenido del nuevo modal -->
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Registro</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario para agregar nuevo registro -->
+                <form id="agregarRegistroForm">
+                    <div class="form-group">
+                        <label for="enunciado">Enunciado</label>
+                        <textarea class="form-control" id="enunciado" name="enunciado" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="evidenciaSugerida">Evidencia Sugerida</label>
+                        <input type="text" class="form-control" id="evidenciaSugerida" name="evidenciaSugerida">
+                    </div>
+                    <div class="form-group">
+                        <label for="rolSugerido">Rol Sugerido</label>
+                        <input type="text" class="form-control" id="rolSugerido" name="rolSugerido">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="guardarRegistro">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $('.collapse').on('shown.bs.collapse', function () {
+            var $currentCollapse = $(this);
+            $('.collapse.show').not($currentCollapse).each(function () {
+                if ($(this).parent().find('.accordion-toggle').hasClass('active')) {
+                    $(this).collapse('hide');
+                    $(this).parent().find('.accordion-toggle').removeClass('active');
+                    $(this).parent().find('.btn-toggle-text').text('Detalle');
+                }
             });
 
-            $('.collapse').on('hidden.bs.collapse', function () {
-                $(this).parent().find('.accordion-toggle').removeClass('active');
+            $currentCollapse.parent().find('.accordion-toggle').addClass('active');
+            $currentCollapse.parent().find('.btn-toggle-text').text('Contraer');
+        });
+
+        $('.collapse').on('hidden.bs.collapse', function () {
+            $(this).parent().find('.accordion-toggle').removeClass('active');
+            $(this).parent().find('.btn-toggle-text').text('Detalle');
+        });
+
+        $('.btn-toggle').click(function () {
+            var $btn = $(this);
+            var $collapse = $($btn.data('target'));
+            if ($collapse.hasClass('show')) {
+                $btn.find('.btn-toggle-text').text('Detalle');
+            } else {
+                $btn.find('.btn-toggle-text').text('Contraer');
+            }
+        });
+
+        $('.collapse').not(':first').collapse('hide');
+
+
+
+        $("#btnCrearFormulario").click(function () {
+            $.ajax({
+
+                url: "@Url.Action("CrearFormulario","Preguntas")",
+                method:"GET",
+                success: function (respuesta) {
+                    $("#contenedorFormulario").html(respuesta);
+                    $("#crearFormularioModal").modal("show");
+
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error al realizar la solicitud AJAX:", error);
+                }
             });
         });
-    </script>
+
+        $(".btnEliminarFormulario").click(function () {
+            var formularioId = $(this).data("id");
+
+            if (confirm("¿Está seguro que desea eliminar este formulario?")) {
+
+                $.ajax({
+                    url: '@Url.Action("EliminarFormulario", "Preguntas")',
+                    method: "POST",
+                    data: { id: formularioId },
+                    success: function (respuesta) {
+
+                        if (respuesta.ok) {
+                            // Actualizar la vista después de eliminar el formulario
+                            location.reload();
+                        } else {
+                            alert(respuesta.mensaje);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error al realizar la solicitud AJAX:", error);
+                    }
+                });
+            }
+        });
+
+        // Función para abrir el nuevo modal al hacer clic en el botón del primer modal
+        $('#gestionExtendidaModal').on('shown.bs.modal', function () {
+            $('#agregarRegistroModal').modal('hide');
+        });
+
+        $('#agregarRegistroModal').on('show.bs.modal', function (e) {
+            // Limpiar los campos del formulario
+            $('#enunciado').val('');
+            $('#evidenciaSugerida').val('');
+            $('#rolSugerido').val('');
+        });
+
+        // Función para guardar el nuevo registro
+        $('#guardarRegistro').click(function () {
+            // Aquí puedes agregar el código para guardar el registro utilizando AJAX u otra técnica
+            // Una vez que el registro se ha guardado exitosamente, puedes cerrar el modal
+
+
+            var enunciado = $("#enunciado").val().trim();
+            var evidenciaSugerida = $("#evidenciaSugerida").val().trim();
+            var rolSugerido = $("#rolSugerido").val().trim();
+
+            // Verificar si los campos obligatorios están vacíos
+            if (enunciado === "" || evidenciaSugerida === "" || rolSugerido === "") {
+                // Mostrar un mensaje de error o realizar alguna acción
+                alert("Por favor, complete todos los campos obligatorios.");
+                return; // Detener la ejecución del código
+            }
+
+            var entidad = {
+                enunciado: enunciado,
+                evidenciaSugerida: evidenciaSugerida,
+                rolSugerido: rolSugerido
+            };
+
+            $.ajax({
+                url: '@Url.Action("GuardarPreguntaExtendida", "Preguntas")',
+                type: 'POST',
+                dataType: 'json',
+                data: { entidad: entidad, id: $("#modalFormularioId").text() },
+                success: function (result) {
+                    debugger;
+                    // Manejar la respuesta exitosa aquí
+
+                    if (result.ok) {
+                        alert('Se ha guardado de forma satisfactoria.');
+                        llenarTablaGE($("#modalFormularioId").text());
+                        $('#agregarRegistroModal').modal('hide');
+
+
+                    } else {
+                        alert(result.mensaje);
+                    }
+
+
+                    console.log(result);
+                },
+                error: function (xhr, status, error) {
+                    // Manejar errores aquí
+                    console.error(xhr.responseText);
+                }
+            });
+
+
+            $('#agregarRegistroModal').modal('hide');
+        });
+    });
+
+
+    function mostrarGestionExtendida(id, enunciado, elemento) {
+
+        $('#modalFormularioId').text(id);
+        $('#modalEnunciado').text(enunciado);
+        $('#modalElemento').text(elemento);
+
+        llenarTablaGE(id);
+
+        $('#gestionExtendidaModal').modal('show');
+
+    }
+
+    function llenarTablaGE(id) {
+        $.ajax({
+            url: "@Url.Action("ObtenerGestionExtendida","Preguntas")",
+            method: "GET",
+            async:false,
+            data: {codigo: id},
+            success: function (respuesta) {
+                $("#contenedorGe").html(respuesta);
+
+
+            },
+            error: function (xhr, status, error) {
+                console.error("Error al realizar la solicitud AJAX:", error);
+            }
+        });
+    }
+
+    function eliminarPreguntaGE(formularioId) {
+        if (confirm("¿Estás seguro de que deseas eliminar esta pregunta?")) {
+
+            $.ajax({
+                url: '@Url.Action("EliminarGE", "Preguntas")',
+                method: "POST",
+                data: { codigo: formularioId },
+                success: function (respuesta) {
+
+                    if (respuesta.ok) {
+                        // Actualizar la vista después de eliminar el formulario
+                        llenarTablaGE($('#modalFormularioId').text())
+
+                    } else {
+                        alert(respuesta.mensaje);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error al realizar la solicitud AJAX:", error);
+                }
+            });
+
+        }
+    }
+
+</script>
 
