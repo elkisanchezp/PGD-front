@@ -5,5 +5,7 @@
         public string Id { get; set; }
         public string Enunciado { get; set; }
         public string Elemento { get; set; }
+
+        public List<PreguntaGE>? PreguntasGE { get; set; } 
     }
 }

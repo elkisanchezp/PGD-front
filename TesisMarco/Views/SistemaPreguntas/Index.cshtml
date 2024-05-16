@@ -1,0 +1,232 @@
+@model List<TesisMarco.DTO.Formulario>
+
+@{
+    Layout = "_Layout";
+}
+<style>
+    .boton-flotante {
+        position: fixed;
+        bottom: 20px; /* Distancia desde el borde inferior */
+        right: 20px; /* Distancia desde el borde derecho */
+        z-index: 1000; /* Asegura que el botón esté en la parte superior de otros elementos */
+        background-color: #007bff; /* Color de fondo */
+        color: #fff; /* Color del texto */
+        padding: 10px 20px; /* Espaciado interno */
+        border: none; /* Sin borde */
+        border-radius: 5px; /* Borde redondeado */
+        cursor: pointer; /* Cursor al pasar sobre el botón */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    }
+</style>
+
+
+<h3>Sistema de preguntas</h3>
+<br />
+<table class="table table-striped espaciado-filas">
+    <thead>
+        <tr class="sr-only">
+            <th>ID</th>
+            <th>Vigencia</th>
+        </tr>
+        <tr>
+            <th class="sr-only">Pregunta ID</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var formulario in Model)
+        {
+            foreach (var pregunta in formulario.Preguntas)
+            {
+                <tr class="icono-pregunta" data-formulario-id="@formulario.Id" data-pregunta-id="@pregunta.Id">
+                    <td class="sr-only">@formulario.Id</td>
+                    <td class="sr-only">@formulario.Vigencia</td>
+                    <td class="sr-only">@pregunta.Id</td>
+                    <td><i class="fas fa-question-circle"></i></td> <!-- Icono de signo de interrogación -->
+                    <td>@pregunta.Enunciado</td>
+                    <td>@pregunta.Elemento</td>
+                </tr>
+                <tr class="detalle" id="detalle-@formulario.Id-@pregunta.Id" style="">
+                    <td colspan="4">
+                        <div class="contenido-adicional" style="padding: 10px;">
+                            <div class="contenido-adicional" style="padding: 10px;">
+                                <div class="contenido-adicional" style="padding: 10px;">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Enunciado</th>
+                                                <th>Respuesta</th>
+                                                <th>Evidencia</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var preguntaGE in pregunta.PreguntasGE)
+                                            {
+                                                <tr data-idformulario="@formulario.Id" data-pregunta-id="@preguntaGE.Id">
+                                                    <td>@preguntaGE.Enunciado</td>
+                                                    <td>
+                                                        <label><input type="radio" name="respuesta-@preguntaGE.Id" value="Si"> Sí</label>
+                                                        <label><input type="radio" name="respuesta-@preguntaGE.Id" value="No"> No</label>
+                                                    </td>
+                                                    <td>
+                                                        <div class="tooltip-container">
+                                                            <textarea name="evidencia" class="input-evidencia"></textarea>
+                                                            <span class="tooltip-text">@preguntaGE.EvidenciaSugerida</span>
+                                                        </div>
+                                                        
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-analizar-evidencia" title="Analizar Evidencia" onclick="analizarEvidencia('@formulario.Id', '@preguntaGE.Id','@preguntaGE.Enunciado' )">
+                                                            <i class="fas fa-search"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<button id="enviarBtn" class="btn btn-primary boton-flotante">Enviar</button>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.btn-analizar-evidencia').tooltip();
+
+        $('.icono-pregunta').click(function () {
+            var formularioId = $(this).data('formulario-id');
+            var preguntaId = $(this).data('pregunta-id');
+            $('#detalle-' + formularioId + '-' + preguntaId).toggle();
+        });
+
+
+        $("#enviarBtn").click(function () {
+
+            var datos = [];
+
+            // Recorre todas las filas de la tabla
+            $('tbody tr').each(function () {
+                var idFormulario = $(this).data('idformulario');
+                var idPreguntaGE = $(this).data('pregunta-id');
+                var evidencia = $(this).find('textarea[name="evidencia"]').val();
+                var respuesta = $(this).find('input[type="radio"]:checked').val();
+
+                // Verifica si se ha marcado alguna opción
+                if (respuesta !== undefined && idPreguntaGE !== undefined) {
+                    // Crea el objeto con los datos recopilados
+                    var objeto = {
+                        PreguntaGEID: idPreguntaGE,
+                        Evidencia: evidencia,
+                        Opcion: respuesta === 'Si',
+                        IdFurmulario: idFormulario
+                    };
+
+                    // Agrega el objeto al arreglo de datos
+                    datos.push(objeto);
+                }
+            });
+
+            debugger;
+            // Envía los datos al servidor o realiza otra acción
+            console.log(datos);
+
+            if (datos.length > 0) {
+
+                $.ajax({
+                    url: '@Url.Action("GuardarRespuestas", "SistemaPreguntas")',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: { formularios: datos },
+
+                    success: function (result) {
+                        debugger;
+                        // Manejar la respuesta exitosa aquí
+
+                        if (result.ok) {
+                            alert('Se ha guardado de forma satisfactoria.');
+
+                            window.location.href = '@Url.Action("Index", "SistemaPreguntas")';
+
+                        } else {
+                            alert(result.mensaje);
+                        }
+
+
+                        console.log(result);
+                    },
+                    error: function (xhr, status, error) {
+                        // Manejar errores aquí
+                        console.error(xhr.responseText);
+                    }
+                });
+
+
+            } else {
+                alert('Diligencie por lo menos una pregunta.');
+            }
+
+
+        });
+    });
+
+    function analizarEvidencia(formularioId, preguntaId, enunciado) {
+        var evidencia = $('tr[data-idformulario="' + formularioId + '"][data-pregunta-id="' + preguntaId + '"] .input-evidencia').val();
+
+
+        if (evidencia.trim() === '') {
+            // Muestra un mensaje indicando que no hay evidencia para analizar
+            alert('No hay evidencia para analizar');
+            return;
+        }
+
+        // Realiza la llamada AJAX para analizar la evidencia
+        $.ajax({
+            url: '@Url.Action("AnalizarEvidencia","SistemaPreguntas")',
+            method: 'POST',
+            data: {
+                formularioId: formularioId,
+                preguntaId: preguntaId,
+                enunciado: enunciado,
+                evidencia: evidencia
+            },
+            success: function (response) {
+                // Prepara el mensaje a mostrar en el modal
+                var mensaje = "<label><b>Enunciado:</b></label><br />" + enunciado + "<br /><br />";
+                mensaje += "<label><b>Evidencia:</b></label><br />" + evidencia + "<br /><br />";
+                mensaje += "<label><b>Resultado:</b></label><br />" + response.mensaje;
+
+                // Muestra el mensaje en el modal
+                $('#resultadoModal .modal-body').html(mensaje);
+                $('#resultadoModal .modal-title').text("Resultado del Análisis"); // Cambia el título del modal
+                $('#resultadoModal').modal('show');
+            },
+            error: function (xhr, status, error) {
+                // Si hay un error en la llamada AJAX, muestra un mensaje de error en el modal
+                $('#resultadoModal .modal-body').text("Error al procesar la evidencia: " + error);
+                $('#resultadoModal .modal-title').text("Error"); // Cambia el título del modal
+                $('#resultadoModal').modal('show');
+            }
+        });
+    }
+
+
+
+
+    
+
+
+</script>

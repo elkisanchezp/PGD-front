@@ -1,6 +1,98 @@
 ﻿@{
     Layout = "_Layout";
 }
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<canvas id="barChart" width="400" height="400"></canvas>
+<canvas id="pieChart" width="400" height="400"></canvas>
+<canvas id="lineChart" width="400" height="400"></canvas>
 
-<h3>En construcción</h3>
+<script>// Obtener el contexto del lienzo para el gráfico de barras
+    var ctxBar = document.getElementById('barChart').getContext('2d');
+    // Obtener el contexto del lienzo para el gráfico circular (pie)
+    var ctxPie = document.getElementById('pieChart').getContext('2d');
+    // Obtener el contexto del lienzo para el gráfico de líneas
+    var ctxLine = document.getElementById('lineChart').getContext('2d');
+
+    // Datos quemados de ejemplo para los puntajes
+    var puntajes = [85, 92, 78, 95, 88, 90, 87, 83, 79, 91];
+
+    // Configuración del gráfico de barras
+    var barChart = new Chart(ctxBar, {
+        type: 'bar',  // Tipo de gráfico (barras)
+        data: {
+            labels: Array.from({ length: puntajes.length }, (_, i) => 'Puntaje ' + (i + 1)), // Etiquetas de los ejes x
+            datasets: [{
+                label: 'Puntajes',  // Etiqueta de la leyenda
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Color de fondo de las barras
+                borderColor: 'rgba(75, 192, 192, 1)',        // Color del borde de las barras
+                borderWidth: 1,                                // Ancho del borde de las barras
+                data: puntajes                                 // Datos de los puntajes
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true  // Empezar el eje Y desde cero
+                }
+            }
+        }
+    });
+
+    // Configuración del gráfico circular (pie)
+    var pieChart = new Chart(ctxPie, {
+        type: 'pie',  // Tipo de gráfico (circular)
+        data: {
+            labels: Array.from({ length: puntajes.length }, (_, i) => 'Puntaje ' + (i + 1)), // Etiquetas de las secciones
+            datasets: [{
+                label: 'Puntajes',  // Etiqueta de la leyenda
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)'
+                ], // Colores de fondo de las secciones
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],        // Colores del borde de las secciones
+                borderWidth: 1,                                // Ancho del borde de las secciones
+                data: puntajes                                 // Datos de los puntajes
+            }]
+        }
+    });
+
+    // Configuración del gráfico de líneas
+    var lineChart = new Chart(ctxLine, {
+        type: 'line',  // Tipo de gráfico (líneas)
+        data: {
+            labels: Array.from({ length: puntajes.length }, (_, i) => 'Puntaje ' + (i + 1)), // Etiquetas de los ejes x
+            datasets: [{
+                label: 'Puntajes',  // Etiqueta de la leyenda
+                borderColor: 'rgba(75, 192, 192, 1)',        // Color de las líneas
+                borderWidth: 1,                                // Ancho de las líneas
+                data: puntajes                                 // Datos de los puntajes
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true  // Empezar el eje Y desde cero
+                }
+            }
+        }
+    });</script>

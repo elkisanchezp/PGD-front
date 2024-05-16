@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using RestSharp;
+using TesisMarco.DTO;
 using TesisMarco.Models;
 
 namespace TesisMarco.Controllers
@@ -12,6 +15,28 @@ namespace TesisMarco.Controllers
         // GET: UsuariosController
         public ActionResult Index()
         {
+
+            string apiUrlEntidades = "https://pgd-app.onrender.com/api/entidades";
+
+            // Crear cliente RestSharp
+            var client = new RestClient(apiUrlEntidades);
+
+            // Crear solicitud GET
+            var request = new RestRequest("", Method.Get);
+
+            // Ejecutar la solicitud y obtener la respuesta
+            var response = client.Execute(request);
+
+            List<Entidad> entidades = new List<Entidad>();
+
+            if (response.IsSuccessful)
+            {
+                // Deserializar la respuesta JSON en una lista de objetos
+                entidades = JsonConvert.DeserializeObject<List<Entidad>>(response.Content);
+            }
+
+            ViewBag.Entidades = new SelectList(entidades, "codigoSigep", "nombre");
+
             var viewModel = new UsuarioModel(); 
             return View(viewModel);
         }
@@ -33,7 +58,7 @@ namespace TesisMarco.Controllers
                     var request = new RestRequest("", Method.Post);
                     // ADMIN - NORMAL
 
-                    request.AddJsonBody(new { username = model.Usuario, password = model.Password, tipoUsuario = "ADMIN", codigoentidad= 2 });
+                    request.AddJsonBody(new { username = model.Usuario, password = model.Password, tipoUsuario = (model.IdTipoUsuario == 1 ?"ADMIN":"NORMAL"), codigoentidad= model.IdEntidad });
 
                     // Ejecutar la solicitud y obtener la respuesta
                     var response = client.Execute(request);

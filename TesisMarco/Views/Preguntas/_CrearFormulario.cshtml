@@ -144,8 +144,7 @@
                 if (result.ok) {
                     alert('Se ha guardado de forma satisfactoria.');
 
-                    window.location.href = '/Preguntas/Index';
-
+                    window.location.href = '@Url.Action("Index", "Preguntas")';
 
                 } else {
                     alert(result.mensaje);

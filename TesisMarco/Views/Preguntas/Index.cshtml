@@ -36,7 +36,7 @@
         {
             <tr data-toggle="collapse" data-target="#detalle-@formulario.Id" class="accordion-toggle">
                 <td>@formulario.Id</td>
-                <td>@formulario.Vigencia</td>
+                <td>@formulario.Vigencia.ToString("dd/MM/yyyy")</td>
                 <td>
                     <button type="button" class="btn btn-link text-primary btn-toggle" data-toggle="collapse" data-target="#detalle-@formulario.Id" style="cursor: pointer;">
                         <i class="fas fa-plus-circle mr-1"></i> <span class="btn-toggle-text">Detalle</span>

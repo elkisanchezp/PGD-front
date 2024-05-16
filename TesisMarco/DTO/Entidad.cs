@@ -1,5 +1,4 @@
-﻿using System;
-namespace TesisMarco.DTO
+﻿namespace TesisMarco.DTO
 {
 	public class Entidad
 	{

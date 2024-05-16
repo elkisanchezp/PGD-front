@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TesisMarco.Models;
 using System.Security.Claims;
+using TesisMarco.DTO;
 
 namespace TesisMarco.Controllers
 {
@@ -21,6 +22,8 @@ namespace TesisMarco.Controllers
         public async Task<IActionResult> Index(LoginModel model, string returnUrl = "/")
         {
 
+
+
             // Verificar si el correo electrónico y la contraseña son correctos
             if (model.Usuario == "admin" && model.Password == "admin")
             {
@@ -37,6 +40,9 @@ namespace TesisMarco.Controllers
                 {
                     claims.Add(new Claim(ClaimTypes.Role, role));
                 }
+
+                claims.Add(new Claim("idEntidad", "2"));
+
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 

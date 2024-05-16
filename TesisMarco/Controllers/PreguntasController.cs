@@ -12,18 +12,30 @@ namespace TesisMarco.Controllers
     {
         public IActionResult Index()
         {
- 
+            int identidad = 2;
+            // Recuperar el idEntidad del claim
+            var idEntidadClaim = User.FindFirst("idEntidad")?.Value;
+            if (idEntidadClaim != null)
+            {
+                int idEntidad = int.Parse(idEntidadClaim);
+                // Ahora puedes utilizar el idEntidad en este controlador
+            }
 
-            List<Formulario> formularios = ConsultarFormularios(2);
 
-
-
-
+            List<Formulario> formularios = ConsultarFormularios(identidad);
             return View(formularios);
         }
 
         public IActionResult CrearFormulario()
         {
+            int identidad = 2;
+            // Recuperar el idEntidad del claim
+            var idEntidadClaim = User.FindFirst("idEntidad")?.Value;
+            if (idEntidadClaim != null)
+            {
+                int idEntidad = int.Parse(idEntidadClaim);
+                // Ahora puedes utilizar el idEntidad en este controlador
+            }
 
             string apiUrlEntidades = "https://pgd-app.onrender.com/api/entidades";
 
@@ -49,7 +61,7 @@ namespace TesisMarco.Controllers
 
             if (entidades!= null && entidades.Count> 0)
             {
-                var entidadUsuario = entidades.Where(x => x.codigoSigep == 2).FirstOrDefault();
+                var entidadUsuario = entidades.Where(x => x.codigoSigep == identidad).FirstOrDefault();
                 if(entidadUsuario != null)
                 {
                     ViewBag.EntidadUsuario = entidadUsuario.nombre;
@@ -269,6 +281,9 @@ namespace TesisMarco.Controllers
 
             return formularios;
         }
+
+
+        
 
 
     }

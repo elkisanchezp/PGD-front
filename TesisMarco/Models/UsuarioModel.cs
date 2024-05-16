@@ -8,5 +8,7 @@
 
         public int IdTipoUsuario { get; set; }
 
+        public int IdEntidad { get; set; }
+
     }
 }
