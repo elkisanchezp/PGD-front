@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RestSharp;
@@ -10,19 +9,30 @@ namespace TesisMarco.Controllers
     [Authorize]
     public class PreguntasController : Controller
     {
-        public IActionResult Index()
+
+        IConfigurationRoot configuration;
+
+        public PreguntasController()
         {
-            int identidad = 2;
+            configuration = new ConfigurationBuilder().
+                SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json")
+                .Build();
+        }
+
+        
+        public IActionResult Index()
+        { 
+            int idEntidad = 0;
             // Recuperar el idEntidad del claim
             var idEntidadClaim = User.FindFirst("idEntidad")?.Value;
             if (idEntidadClaim != null)
             {
-                int idEntidad = int.Parse(idEntidadClaim);
+                idEntidad = int.Parse(idEntidadClaim);
                 // Ahora puedes utilizar el idEntidad en este controlador
             }
 
 
-            List<Formulario> formularios = ConsultarFormularios(identidad);
+            List<Formulario> formularios = ConsultarFormularios(idEntidad);
             return View(formularios);
         }
 
@@ -105,6 +115,14 @@ namespace TesisMarco.Controllers
 
             try
             {
+                int idEntidad = 0;
+
+                var idEntidadClaim = User.FindFirst("idEntidad")?.Value;
+                if (idEntidadClaim != null)
+                {
+                    idEntidad = int.Parse(idEntidadClaim);
+                }
+
                 string apiUrl = "https://pgd-app.onrender.com/api/formulario";
 
                 // Crear cliente RestSharp
@@ -115,10 +133,12 @@ namespace TesisMarco.Controllers
                 // ADMIN - NORMAL
 
 
+                //obtener consecutivo
+                int consecutivo = ObtenerConsecutivo(idEntidad);
+
 
                 if (entidad?.Preguntas?.Count > 0)
                 {
-                    int consecutivo = 1;
 
                     foreach (var item in entidad.Preguntas)
                     {
@@ -282,9 +302,35 @@ namespace TesisMarco.Controllers
             return formularios;
         }
 
+        private int  ObtenerConsecutivo(int idEntidad)
+        {
+            int consecutivo = 0;
 
-        
+            List<Formulario> formularios = ConsultarFormularios(idEntidad);
 
+            if(formularios != null && formularios.Count > 0)
+            {
+                List<int> idPreguntas = new List<int>();
+
+                foreach (var formulario in formularios)
+                    foreach (var pregunta in formulario.Preguntas)
+                    {
+                        string codigo = pregunta.Id;
+                        if (!string.IsNullOrEmpty(codigo))
+                        {
+                            if (codigo.Count() > 2)
+                                idPreguntas.Add(int.TryParse(codigo.Substring(3), out int salida) ? salida : 1);
+                        }
+                    }
+
+                if (idPreguntas.Count > 0)
+                    consecutivo = idPreguntas.Max();
+
+            }
+            
+
+            return consecutivo+1;
+        }
 
     }
 }

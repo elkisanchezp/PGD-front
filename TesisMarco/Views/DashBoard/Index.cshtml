@@ -1,98 +1,200 @@
-﻿@{
+﻿@model TesisMarco.DTO.EntidadPuntaje
+
+@{
     Layout = "_Layout";
 }
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<canvas id="barChart" width="400" height="400"></canvas>
-<canvas id="pieChart" width="400" height="400"></canvas>
-<canvas id="lineChart" width="400" height="400"></canvas>
 
-<script>// Obtener el contexto del lienzo para el gráfico de barras
-    var ctxBar = document.getElementById('barChart').getContext('2d');
-    // Obtener el contexto del lienzo para el gráfico circular (pie)
-    var ctxPie = document.getElementById('pieChart').getContext('2d');
-    // Obtener el contexto del lienzo para el gráfico de líneas
-    var ctxLine = document.getElementById('lineChart').getContext('2d');
+<br />
 
-    // Datos quemados de ejemplo para los puntajes
-    var puntajes = [85, 92, 78, 95, 88, 90, 87, 83, 79, 91];
+<h1>Gráficos de Puntajes por Categoría</h1>
+<div class="row">
+    <div class="col-md-6">
+        @Html.DropDownList("IdEntidad", ViewBag.Entidades as SelectList, "Seleccione...", new { @class = "form-control" })
+    </div>
+</div>
+<br />
+<br />
+<p id="nombreEntidad">@ViewBag.NombreEntidad</p>
 
-    // Configuración del gráfico de barras
-    var barChart = new Chart(ctxBar, {
-        type: 'bar',  // Tipo de gráfico (barras)
-        data: {
-            labels: Array.from({ length: puntajes.length }, (_, i) => 'Puntaje ' + (i + 1)), // Etiquetas de los ejes x
-            datasets: [{
-                label: 'Puntajes',  // Etiqueta de la leyenda
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',  // Color de fondo de las barras
-                borderColor: 'rgba(75, 192, 192, 1)',        // Color del borde de las barras
-                borderWidth: 1,                                // Ancho del borde de las barras
-                data: puntajes                                 // Datos de los puntajes
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true  // Empezar el eje Y desde cero
-                }
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="chartPastel" class="grafica" width="400" height="400"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="chartBarras" class="grafica" width="400" height="400"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="chartLineas" class="grafica" width="400" height="400"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>// Datos del JSON
+
+
+
+    var datos = @Html.Raw(Json.Serialize(Model));
+    llenarDatos(datos, true);
+
+
+
+    function llenarDatos(datos, inicio) {
+
+
+        if (inicio != true) {
+
+            // Limpiar gráficos existentes
+            if (window.chartPastel) {
+                window.chartPastel.destroy();
+            }
+            if (window.chartBarras) {
+                window.chartBarras.destroy();
+            }
+            if (window.chartLineas) {
+                window.chartLineas.destroy();
             }
         }
-    });
 
-    // Configuración del gráfico circular (pie)
-    var pieChart = new Chart(ctxPie, {
-        type: 'pie',  // Tipo de gráfico (circular)
-        data: {
-            labels: Array.from({ length: puntajes.length }, (_, i) => 'Puntaje ' + (i + 1)), // Etiquetas de las secciones
-            datasets: [{
-                label: 'Puntajes',  // Etiqueta de la leyenda
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)',
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ], // Colores de fondo de las secciones
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)',
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],        // Colores del borde de las secciones
-                borderWidth: 1,                                // Ancho del borde de las secciones
-                data: puntajes                                 // Datos de los puntajes
-            }]
-        }
-    });
 
-    // Configuración del gráfico de líneas
-    var lineChart = new Chart(ctxLine, {
-        type: 'line',  // Tipo de gráfico (líneas)
-        data: {
-            labels: Array.from({ length: puntajes.length }, (_, i) => 'Puntaje ' + (i + 1)), // Etiquetas de los ejes x
-            datasets: [{
-                label: 'Puntajes',  // Etiqueta de la leyenda
-                borderColor: 'rgba(75, 192, 192, 1)',        // Color de las líneas
-                borderWidth: 1,                                // Ancho de las líneas
-                data: puntajes                                 // Datos de los puntajes
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true  // Empezar el eje Y desde cero
+        var opciones = {
+            responsive: false
+        };
+
+
+        // Datos para el gráfico de pastel
+        var ctxPastel = document.getElementById('chartPastel').getContext('2d');
+        var labelsPastel = datos.puntajes.map(function (item) {
+            return item.categoria;
+        });
+        var valoresPastel = datos.puntajes.map(function (item) {
+            return item.valor;
+        });
+
+        window.chartPastel = new Chart(ctxPastel, {
+            type: 'pie',
+            data: {
+                labels: labelsPastel,
+                datasets: [{
+                    label: 'Puntajes por Categoría',
+                    data: valoresPastel,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.5)',
+                        'rgba(54, 162, 235, 0.5)',
+                        'rgba(255, 206, 86, 0.5)',
+                        'rgba(75, 192, 192, 0.5)',
+                        'rgba(153, 102, 255, 0.5)',
+                        'rgba(255, 159, 64, 0.5)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false
+            }
+        });
+
+        // Datos para el gráfico de barras
+        var ctxBarras = document.getElementById('chartBarras').getContext('2d');
+        var labelsBarras = datos.puntajes.map(function (item) {
+            return item.categoria;
+        });
+        var valoresBarras = datos.puntajes.map(function (item) {
+            return item.valor;
+        });
+
+        window.chartBarras = new Chart(ctxBarras, {
+            type: 'bar',
+            data: {
+                labels: labelsBarras,
+                datasets: [{
+                    label: 'Puntajes por Categoría',
+                    data: valoresBarras,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
+        });
+
+        // Datos para el gráfico de líneas
+        var ctxLineas = document.getElementById('chartLineas').getContext('2d');
+        var labelsLineas = datos.puntajes.map(function (item) {
+            return item.categoria;
+        });
+        var valoresLineas = datos.puntajes.map(function (item) {
+            return item.valor;
+        });
+
+        window.chartLineas = new Chart(ctxLineas, {
+            type: 'line',
+            data: {
+                labels: labelsLineas,
+                datasets: [{
+                    label: 'Puntajes por Categoría',
+                    data: valoresLineas,
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: opciones
+            }
+        });
+    }
+
+
+    $("#IdEntidad").change(function () {
+        debugger;
+        var valor = $(this).val();
+        var texto = $(this).find("option:selected").text();
+
+        if (valor && valor.length > 0) {
+
+            $.ajax({
+                url: '@Url.Action("ObtenerPuntaje", "DashBoard")',
+                dataType: 'json',
+                data: { idEntidad: valor },
+
+                success: function (result) {
+                    debugger;
+                    // Manejar la respuesta exitosa aquí
+
+                    $("#nombreEntidad").html(texto);
+
+                    llenarDatos(result, false);
+
+                    console.log(result);
+                },
+                error: function (xhr, status, error) {
+                    debugger;
+                    // Manejar errores aquí
+                    console.error(xhr.responseText);
+                }
+            });
         }
-    });</script>
+
+    });
+
+</script>

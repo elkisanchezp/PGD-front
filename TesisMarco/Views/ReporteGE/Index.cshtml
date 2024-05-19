@@ -1,0 +1,127 @@
+﻿@model List<TesisMarco.DTO.Formulario>
+
+@{
+    Layout = "_Layout";
+}
+
+
+<h2>Reporte GE</h2>
+<br />
+@foreach (var formulario in Model)
+{
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Formulario ID: @formulario.Id</h5>
+            <p class="card-text">Fecha de Vigencia: @formulario.Vigencia.ToString("dd/MM/yyyy")</p>
+            <button type="button" class="btn btn-primary btn-generar-documento" data-id="@formulario.Id" id="btnGenerarReporteFurag">
+                <i class="fas fa-file-download"></i> Generar Reporte
+            </button>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Pregunta</th>
+                <th>Enunciado</th>
+                <th>Elemento</th>
+                <th>Enunciado PreguntaGE</th>
+                <th>Evidencia Sugerida</th>
+                <th>Rol Sugerido</th>
+                <th>Respuesta</th>
+                <th>Evidencia Respuesta</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pregunta in formulario.Preguntas)
+            {
+                foreach (var preguntaGE in pregunta.PreguntasGE)
+                {
+                    foreach (var respuesta in preguntaGE.Respuestas)
+                    {
+                        <tr>
+                            <td>@pregunta.Id</td>
+                            <td>@pregunta.Enunciado</td>
+                            <td>@pregunta.Elemento</td>
+                            <td>@preguntaGE.Enunciado</td>
+                            <td>@preguntaGE.EvidenciaSugerida</td>
+                            <td>@preguntaGE.RolSugerido</td>
+                            <td>@(respuesta.opcion ? "SI" : "NO")</td>
+                            <td>@respuesta.evidencia</td> <!-- Mostrar la evidencia de la respuesta -->
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+}
+
+<!-- Asegúrate de incluir las librerías de Bootstrap y waitingDialog -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waitingfor/1.2.2/waitingdialog.min.js"></script>
+
+
+<!-- Aquí colocas tu botón o cualquier otro elemento que active la descarga -->
+<button class="btn btn-primary btn-generar-documento" data-id="1">Generar Documento</button>
+
+<div id="esperando" class="modal" tabindex="-1" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="text-center mt-3">Generando archivo, por favor espere...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    #esperando {
+        background-color: rgba(0, 0, 0, 0.5); /* Fondo opaco */
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+        $(".btn-generar-documento").click(function () {
+            var id = $(this).data("id");
+
+            document.getElementById('esperando').style.display = 'block';
+
+            $.ajax({
+                url: '@Url.Action("GenerarArchivoFURAG", "ReporteGE")',
+                type: 'POST',
+                data: { formularioId: id },
+                xhrFields: {
+                    responseType: 'blob' // Esto es importante para manejar la respuesta como un Blob
+                },
+                success: function (data, textStatus, xhr) {
+                    debugger;
+                    var contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'; // Tipo de contenido para un archivo Excel .xlsx
+                    var blob = new Blob([data], { type: contentType });
+
+                    var contentDisposition = xhr.getResponseHeader("Content-Disposition");
+                    var fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                    var matches = fileNameRegex.exec(contentDisposition);
+                    var fileName = matches[1].replace(/['"]/g, '');
+
+                    var link = document.createElement("a");
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = fileName;
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    document.getElementById('esperando').style.display = 'none';
+                },
+                error: function (xhr, status, error) {
+                    debugger;
+                    console.error(xhr.responseText);
+                    // Manejar el error
+                    document.getElementById('esperando').style.display = 'none';
+                }
+            });
+        });
+
+    });
+</script>

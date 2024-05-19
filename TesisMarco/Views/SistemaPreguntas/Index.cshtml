@@ -73,7 +73,7 @@
                                                     </td>
                                                     <td>
                                                         <div class="tooltip-container">
-                                                            <textarea name="evidencia" class="input-evidencia"></textarea>
+                                                            <textarea name="evidencia" class="input-evidencia" title="@preguntaGE.EvidenciaSugerida"></textarea>
                                                             <span class="tooltip-text">@preguntaGE.EvidenciaSugerida</span>
                                                         </div>
                                                         
@@ -106,6 +106,7 @@
 <script>
     $(document).ready(function () {
         $('.btn-analizar-evidencia').tooltip();
+        $('.input-evidencia').tooltip();
 
         $('.icono-pregunta').click(function () {
             var formularioId = $(this).data('formulario-id');

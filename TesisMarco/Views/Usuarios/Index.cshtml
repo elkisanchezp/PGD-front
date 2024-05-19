@@ -3,9 +3,18 @@
 @{
     Layout = "_Layout";
 }
-@using (Html.BeginForm("CrearUsuario", "Usuarios", FormMethod.Post))
+@using (Html.BeginForm("Index", "Usuarios", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
+<div class="form-group">
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+</div>
 
     <div class="form-group">
         @Html.LabelFor(m => m.Usuario)
@@ -30,9 +39,12 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Crear</button>
+    <br />
 
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
 }
+
+
 <!-- jQuery v3.6.0 -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

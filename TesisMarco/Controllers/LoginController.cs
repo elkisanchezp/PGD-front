@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using TesisMarco.Models;
 using System.Security.Claims;
 using TesisMarco.DTO;
+using RestSharp;
+using Newtonsoft.Json;
 
 namespace TesisMarco.Controllers
 {
@@ -22,50 +24,68 @@ namespace TesisMarco.Controllers
         public async Task<IActionResult> Index(LoginModel model, string returnUrl = "/")
         {
 
-
-
             // Verificar si el correo electrónico y la contraseña son correctos
-            if (model.Usuario == "admin" && model.Password == "admin")
+            if (!string.IsNullOrEmpty(model.Usuario) && !string.IsNullOrEmpty(model.Password))
             {
+                string apiUrlLogin = $"https://pgd-app.onrender.com/api/usuario/login";
 
-                // Asignar roles al usuario
-                var roles = new List<string> { "Admin", "Usuario" }; // Roles a asignar
-                var claims = new List<Claim>
+                // Crear cliente RestSharp
+                var client = new RestClient(apiUrlLogin);
+
+                // Crear solicitud GET
+                var request = new RestRequest("", Method.Post);
+
+                request.AddJsonBody(new { username = model.Usuario, password = model.Password });
+
+                // Ejecutar la solicitud y obtener la respuesta
+                var response = client.Execute(request);
+
+                if (response.IsSuccessful && response.Content != null)
+                {
+                    var usuarioApi = JsonConvert.DeserializeObject<Usuario>(response.Content);
+
+                    // Asignar roles al usuario
+                    var roles = new List<string> { usuarioApi.tipoUsuario }; // Roles a asignar
+                    var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, model.Usuario),
                         // Puedes añadir más claims según necesites
                     };
 
-                foreach (var role in roles)
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, role));
+                    foreach (var role in roles)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, role));
+                    }
+
+                    claims.Add(new Claim("idEntidad", usuarioApi.codigoentidad.ToString()));
+
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    var authProperties = new AuthenticationProperties
+                    {
+                        IsPersistent = model.RememberMe
+                    };
+
+                    await HttpContext.SignInAsync(
+                        CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity),
+                        authProperties);
+
+                    return RedirectToAction("Index", "Home");
                 }
-
-                claims.Add(new Claim("idEntidad", "2"));
-
-
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                var authProperties = new AuthenticationProperties
+                else
                 {
-                    IsPersistent = model.RememberMe
-                };
-
-                await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
-                    authProperties);
-
-                return RedirectToAction("Index","Home");
-
-
+                    ModelState.AddModelError(string.Empty, response.Content);
+                }
             }
             else
             {
                 // Credenciales incorrectas, mostrar mensaje de error
                 ModelState.AddModelError(string.Empty, "Correo electrónico o contraseña incorrectos.");
-                return View(model);
+               
             }
+            return View(model);
         }
 
 

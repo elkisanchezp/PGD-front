@@ -7,6 +7,8 @@
         public string EvidenciaSugerida { get; set; }
         public string RolSugerido { get; set; }
         public string IdPreguntaFurag { get; set; }
+        public List<Respuesta>? Respuestas { get; set; }
+
     }
 }
 

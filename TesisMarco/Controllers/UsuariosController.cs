@@ -43,7 +43,7 @@ namespace TesisMarco.Controllers
 
 
         [HttpPost]
-        public IActionResult CrearUsuario(UsuarioModel model)
+        public IActionResult Index(UsuarioModel model)
         {
             if (ModelState.IsValid)
             {
@@ -56,16 +56,25 @@ namespace TesisMarco.Controllers
 
                     // Crear solicitud POST
                     var request = new RestRequest("", Method.Post);
-                    // ADMIN - NORMAL
 
-                    request.AddJsonBody(new { username = model.Usuario, password = model.Password, tipoUsuario = (model.IdTipoUsuario == 1 ?"ADMIN":"NORMAL"), codigoentidad= model.IdEntidad });
+                    // ADMIN - NORMAL
+                    var tipoUsuario = (model.IdTipoUsuario == 1) ? "ADMIN" : "NORMAL";
+
+                    request.AddJsonBody(new { username = model.Usuario, password = model.Password, tipoUsuario = tipoUsuario, codigoentidad = model.IdEntidad });
 
                     // Ejecutar la solicitud y obtener la respuesta
                     var response = client.Execute(request);
 
-
-
-                    return RedirectToAction("Index", "Home"); // Redirigir a la página de inicio u otra página
+                    if (!response.IsSuccessful)
+                    {
+                        ModelState.AddModelError("", response?.Content);
+                    }
+                    else
+                    {
+                        TempData["SuccessMessage"] = "Usuario creado satisfactoriamente.";
+                        return RedirectToAction("Index", "Usuarios");
+                    }
+                  
                 }
                 catch (Exception ex)
                 {
@@ -73,10 +82,38 @@ namespace TesisMarco.Controllers
                     // Log the exception
                 }
             }
+            else
+            {
+                ModelState.AddModelError("", "Todos los campos son obligarios.");
+            }
 
-            // Si llegamos aquí, significa que hubo un error, volvemos a mostrar el formulario con los errores
-            return RedirectToAction("Index", "Usuarios"); ;
+
+            string apiUrlEntidades = "https://pgd-app.onrender.com/api/entidades";
+
+            // Crear cliente RestSharp
+            var clientEntidad = new RestClient(apiUrlEntidades);
+
+            // Crear solicitud GET
+            var requestEntidad = new RestRequest("", Method.Get);
+
+            // Ejecutar la solicitud y obtener la respuesta
+            var responseEntidad = clientEntidad.Execute(requestEntidad);
+
+            List<Entidad> entidades = new List<Entidad>();
+
+            if (responseEntidad.IsSuccessful)
+            {
+                // Deserializar la respuesta JSON en una lista de objetos
+                entidades = JsonConvert.DeserializeObject<List<Entidad>>(responseEntidad.Content);
+            }
+
+            ViewBag.Entidades = new SelectList(entidades, "codigoSigep", "nombre");
+
+            var viewModel = new UsuarioModel();
+
+            return View(model); // Retornar la vista actual con los errores de validación
         }
+
 
 
         // GET: UsuariosController/Details/5

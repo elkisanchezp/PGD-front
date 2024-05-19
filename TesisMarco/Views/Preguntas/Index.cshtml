@@ -42,11 +42,12 @@
                         <i class="fas fa-plus-circle mr-1"></i> <span class="btn-toggle-text">Detalle</span>
                     </button>
                 </td>
-
-
                 <td>
                     <button type="button" class="btn btn-danger btnEliminarFormulario" data-id="@formulario.Id" onclick="event.stopPropagation()">
                         <i class="fas fa-trash"></i> <!-- Icono de eliminar de Font Awesome -->
+                    </button>
+                    <button type="button" class="btn btn-light btnSubirArchivo" data-id="@formulario.Id" onclick="event.stopPropagation()" title="Carga masivo preguntas">
+                        <i class="fas fa-file-upload"></i> <!-- Icono de subir archivo de Font Awesome -->
                     </button>
                 </td>
             </tr>
@@ -159,6 +160,28 @@
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="idformularioArchivo" />
+                <h5 class="modal-title" id="uploadModalLabel">Subir Archivo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="file" id="fileInput" class="form-control-file" accept="text/csv">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" id="uploadButton" class="btn btn-primary">Subir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script>
 
@@ -238,6 +261,16 @@
             }
         });
 
+        $(".btnSubirArchivo").tooltip();
+
+        $(".btnSubirArchivo").click(function () {
+            var formularioId = $(this).data("id");
+            $("#idformularioArchivo").val(formularioId);
+            $("#uploadModalLabel").html("Subir Archivo fomulario "+ formularioId);
+            $("#uploadModal").modal("show");
+        });
+
+
         // Función para abrir el nuevo modal al hacer clic en el botón del primer modal
         $('#gestionExtendidaModal').on('shown.bs.modal', function () {
             $('#agregarRegistroModal').modal('hide');
@@ -303,6 +336,43 @@
 
 
             $('#agregarRegistroModal').modal('hide');
+        });
+
+
+        $("#uploadButton").click(function () {
+
+            var idformulario = $("#idformularioArchivo").val();
+
+            var fileInput = $('#fileInput')[0].files[0];
+
+            if (fileInput) {
+                var formData = new FormData();
+                formData.append('file', fileInput);
+
+                $.ajax({
+                    url: 'https://pgd-app.onrender.com/api/carguearchivos/preguntas/' + idformulario,
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        debugger;
+                        console.log('Archivo subido exitosamente');
+                        console.log(response);
+                        $('#uploadModal').modal('hide'); // Ocultar el modal después de subir el archivo
+                        alert('Procesado.');
+                        window.location.reload(); // Recargar la página
+                    },
+                    error: function (xhr, status, error) {
+                        debugger;
+                        console.error('Error al subir archivo:', error);
+                        alert('Procesado.');
+                        window.location.reload(); // Recargar la página
+                    }
+                });
+            } else {
+                alert('No se seleccionó ningún archivo');
+            }
         });
     });
 
